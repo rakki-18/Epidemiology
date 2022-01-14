@@ -75,7 +75,7 @@ class SIR:
             self.recovered.append(recovered_person)
 
 
-def simulate(model, df, timestamps):
+def simulate(model, df, timestamps, vaccinated, d):
     total_count = 0
     days = 0
     previous_timestamp = 0
@@ -108,20 +108,18 @@ def simulate(model, df, timestamps):
         days = days + 1
         model.get_new_recovered()
         model.get_new_infected(infected_contact)
+        if(days == d):
+            model.vaccinate(vaccinated)
         print("After Day ", days)
         print("Number of susceptible: ", len(model.suscepted))
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
 
-
-def run(model, vaccinated):
-#     current_directory = os.getcwd()
-#     print(current_directory)
-
+# the variable d specifies the day after which the population must be vaccinated
+def run(model, vaccinated, d):
     df = pd.read_csv('../primaryschool.csv')
     # 105 timestamps are going to be clustered together and considered as one day.
     # This would make the dataset into 30 days
     timestamps_in_a_day = 105    
     model.init()
-    model.vaccinate(vaccinated)
-    simulate(model, df, timestamps_in_a_day)
+    simulate(model, df, timestamps_in_a_day, vaccinated, d)
