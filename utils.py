@@ -88,7 +88,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
             # Check for transitions from susceptible to infected
             if model.person_type(person1) == 'susceptible' and model.person_type(person2) == 'infected':
                 infected_contact.append(person1)
-            if model.person_type(person2) == 'susceptiblee' and model.person_type(person1) == 'infected':
+            if model.person_type(person2) == 'susceptible' and model.person_type(person1) == 'infected':
                 infected_contact.append(person2)
             # If new timestamp, then increase count
             if(model.df["Time"][total_count] != previous_timestamp):
