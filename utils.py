@@ -9,9 +9,11 @@ class SIR:
     infected = set()
     recovered = set()
     vaccinated = set()
+    deceased = set()
     # Can be modified according to the disease scenario
-    alpha = 0.8
-    beta = 0.3
+    beta = 0.8 # Probability of getting infected on interaction with an infected person. 
+    gamma = 0.3 # Probability of natural recovery for an infected person
+    alpha = 0.05 # Probablity of an infected person dying
     initial_infected = 12
 
     # Vaccinate the people in the list 'vaccinated_people'
@@ -29,13 +31,12 @@ class SIR:
     def __init__(self, df, metadata):
         self.df = df
         self.metadata = metadata
-        df.head()
         
     def init(self):
         for person in self.metadata['ID']:
             self.susceptible.add(person)
+        
         self.infected = random.sample(self.susceptible, self.initial_infected)
-
         for infected_person in self.infected:
             self.susceptible.remove(infected_person)
 
@@ -50,7 +51,7 @@ class SIR:
     # Simulate new infected people
     def get_new_infected(self, infected_contact):
         total = len(infected_contact)
-        new_infected_total = self.alpha * total
+        new_infected_total = self.beta * total
         new_infected = random.sample(infected_contact, k=int(new_infected_total))
         # Remove duplicates
         new_infected = list(set(new_infected))
@@ -61,13 +62,21 @@ class SIR:
 
     # Simulate natural recovery
     def get_new_recovered(self):
-        recovered_count = self.beta * (len(self.infected))
-        new_recovered = random.sample(self.infected, k=int(recovered_count))
+        recovered_count = int(self.gamma * len(self.infected))
+        new_recovered = random.sample(self.infected, k=recovered_count)
         # Add them to recovered
         for recovered_person in new_recovered:
             self.infected.remove(recovered_person)
             self.recovered.add(recovered_person)
 
+    # Simulate deaths
+    def get_new_deaths(self):
+        death_count = int(self.alpha * len(self.infected))
+        new_deaths = random.sample(self.infected, k=death_count)
+        # Add them to deceased
+        for deceased_person in new_deaths:
+            self.infected.remove(deceased_person)
+            self.deceased.add(deceased_person)
 
 def simulate(model, timestamps, vaccinated, vaccination_day):
     total_count = 0
@@ -78,6 +87,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     print("Number of susceptible: ", len(model.susceptible))
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
+    print("Number of deceased: ", len(model.deceased))
     
     while total_count < model.df.shape[0]:
         count = 0
@@ -98,6 +108,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         
         model.get_new_recovered()
         model.get_new_infected(infected_contact)
+        model.get_new_deaths()
         
         days = days + 1
 
@@ -108,6 +119,13 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of susceptible: ", len(model.susceptible))
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
+        print("Number of deceased: ", len(model.deceased))
+    
+    return {
+        'metrics': {
+            'total_deaths': len(model.deceased)
+        }
+    }
 
 # The variable vaccination_day specifies the day after which the population must be vaccinated
 def run(model, vaccinated, vaccination_day):
@@ -115,4 +133,4 @@ def run(model, vaccinated, vaccination_day):
     # This would make the dataset into 30 days
     timestamps_in_a_day = 105    
     model.init()
-    simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
+    print(simulate(model, timestamps_in_a_day, vaccinated, vaccination_day))
