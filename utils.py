@@ -88,7 +88,9 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
-    
+
+    max_infections = len(model.infected)
+
     while total_count < model.df.shape[0]:
         count = 0
         infected_contact = []
@@ -120,10 +122,13 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
+
+        max_infections = max(max_infections, len(model.infected))
     
     return {
         'metrics': {
-            'total_deaths': len(model.deceased)
+            'total_deaths': len(model.deceased),
+            'peak_infections': max_infections
         }
     }
 
