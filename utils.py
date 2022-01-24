@@ -1,9 +1,15 @@
 import pandas as pd
 import os
 import random
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class SIR:
+    S = []
+    I = []
+    R = []
+    T = []
     suscepted = []
     infected = []
     recovered = []
@@ -108,11 +114,32 @@ def simulate(model, df, timestamps):
         days = days + 1
         model.get_new_recovered()
         model.get_new_infected(infected_contact)
+        no_sus = len(model.suscepted)
+        no_inf = len(model.infected)
+        no_rec = len(model.recovered)
+        model.S.append(no_sus)
+        model.I.append(no_inf)
+        model.R.append(no_rec)
+        model.T.append(days)
         print("After Day ", days)
-        print("Number of susceptible: ", len(model.suscepted))
-        print("Number of infected: ", len(model.infected))
-        print("Number of recovered: ", len(model.recovered))
+        print("Number of susceptible: ", no_sus)
+        print("Number of infected: ", no_inf)
+        print("Number of recovered: ", no_rec)
 
+def visualize(model):
+    S = np.array(model.S)
+    I = np.array(model.I)
+    R = np.array(model.R)
+    T = np.array(model.T)
+    
+    plt.plot(T,S,label = "Susceptible")
+    plt.plot(T,I,label = "Infected")
+    plt.plot(T,R,label = "Recovered")
+    
+    plt.xlabel("Days")
+    plt.ylabel("No. of individuals")
+    
+    plt.legend()
 
 def run(model, vaccinated):
 #     current_directory = os.getcwd()
@@ -125,3 +152,4 @@ def run(model, vaccinated):
     model.init()
     model.vaccinate(vaccinated)
     simulate(model, df, timestamps_in_a_day)
+    visualize(model)
