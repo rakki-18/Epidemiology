@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Epidemiology</title>
+{% endblock %}
+
+
+{% block body %}
+<h2> Upload the files now</h2>
+<form action="/" method="POST" enctype="multipart/form-data">
+    <label>Upload Metadata here</label>
+    <input type="file" name="metadata" placeholder="metadata">
+    <label>Upload contact network graph here</label>
+    <input type="file" name="df" placeholder="contact_network">
+    <input type="submit" value="Upload">
+</form>
+{% endblock %}
