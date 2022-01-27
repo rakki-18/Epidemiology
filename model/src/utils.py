@@ -36,7 +36,7 @@ class SIR:
         for person in self.metadata['ID']:
             self.susceptible.add(person)
         
-        self.infected = random.sample(self.susceptible, self.initial_infected)
+        self.infected = random.sample(list(self.susceptible), self.initial_infected)
         for infected_person in self.infected:
             self.susceptible.remove(infected_person)
 
