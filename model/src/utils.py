@@ -4,12 +4,6 @@ import random
 
 
 class SIR:
-    # Sets to keep track of people in the model
-    susceptible = set()
-    infected = set()
-    recovered = set()
-    vaccinated = set()
-    deceased = set()
     # Can be modified according to the disease scenario
     beta = 0.8 # Probability of getting infected on interaction with an infected person. 
     gamma = 0.3 # Probability of natural recovery for an infected person
@@ -33,10 +27,16 @@ class SIR:
         self.metadata = metadata
         
     def init(self):
+        # Sets to keep track of people in the model
+        self.susceptible = set()
+        self.infected = set()
+        self.recovered = set()
+        self.vaccinated = set()
+        self.deceased = set()
         for person in self.metadata['ID']:
             self.susceptible.add(person)
         
-        self.infected = random.sample(self.susceptible, self.initial_infected)
+        self.infected = random.sample(list(self.susceptible), self.initial_infected)
         for infected_person in self.infected:
             self.susceptible.remove(infected_person)
 
@@ -138,4 +138,6 @@ def run(model, vaccinated, vaccination_day):
     # This would make the dataset into 30 days
     timestamps_in_a_day = 105    
     model.init()
-    print(simulate(model, timestamps_in_a_day, vaccinated, vaccination_day))
+    result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
+    print(result)
+    return result

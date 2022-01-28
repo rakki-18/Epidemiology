@@ -2,14 +2,14 @@ from collections import defaultdict
 import pandas as pd
 
 def vaccination_strategy(model):
-    contact_data = pd.read_csv('primaryschool.csv',delimiter='\t',names=['Time', 'ID 1', 'ID 2', 'Class 1', 'Class 2'])
+    contact_data = model.df
     contact_graph = defaultdict(list)
     vertices=[]
-    vaccination_count = 0.2*(model.end_range - model.start_range)
+    vaccination_count = int(0.2 * model.metadata.shape[0])
     index=0
     while index < contact_data.shape[0]:
-        id1=contact_data['ID 1'][index]
-        id2=contact_data['ID 2'][index]
+        id1=contact_data['Person 1'][index]
+        id2=contact_data['Person 2'][index]
         if not(id1 in contact_graph.keys() and id2 in contact_graph[id1]):
           contact_graph[id1].append(id2)
           contact_graph[id2].append(id1)
@@ -59,10 +59,10 @@ def APDetails(contact_graph, vertices, u, visited, parent, low, disc, AP,Time):
             APDetails(contact_graph, vertices, vertices.index(v), visited, parent, low, disc, AP,Time)
 
             low[u] = min(low[u], low[vertices.index(v)])
-            print(children)
-            print(parent[u])
-            print(low[u])
-            print(low[vertices.index(v)])
+            # print(children)
+            # print(parent[u])
+            # print(low[u])
+            # print(low[vertices.index(v)])
             # u is a Cut Vertex in following cases 
             # if,u is root of DFS tree & has two or more chilren. 
             if parent[u] == -1 and children > 1: 

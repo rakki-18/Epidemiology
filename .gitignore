@@ -1,3 +1,8 @@
 __pycache__/
 
 .ipynb_checkpoints
+
+venv/
+
+.pytest_cache/
+sir_model.egg-info/
