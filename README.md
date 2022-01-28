@@ -1,3 +1,4 @@
+[![on push](https://github.com/rakki-18/Epidemiology/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rakki-18/Epidemiology/actions/workflows/main.yml)
 # Epidemiology
 IEEE NITK year-long project
 
