@@ -1,7 +1,8 @@
 import pandas as pd
 import os
 import random
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 class SIR:
     # Can be modified according to the disease scenario
@@ -9,6 +10,10 @@ class SIR:
     gamma = 0.3 # Probability of natural recovery for an infected person
     alpha = 0.05 # Probablity of an infected person dying
     initial_infected = 12
+    no_susceptible = []
+    no_infected = []
+    no_recovered = []
+    no_deceased = []
 
     # Vaccinate the people in the list 'vaccinated_people'
     def vaccinate(self, vaccinated_people):
@@ -77,19 +82,43 @@ class SIR:
         for deceased_person in new_deaths:
             self.infected.remove(deceased_person)
             self.deceased.add(deceased_person)
-
+            
+def visualize(model):
+    no_sus = np.array(model.no_susceptible)
+    no_inf = np.array(model.no_infected)
+    no_rec = np.array(model.no_recovered)
+    no_dec = np.array(model.no_deceased)
+    
+    time = []
+    for i in range(31):
+        time.append(i)
+    
+    time = np.array(time)
+    
+    plt.plot(time,no_sus,label = 'Suscepted')
+    plt.plot(time,no_inf,label = 'Infected')
+    plt.plot(time,no_rec,label = 'Recovered')
+    plt.plot(time,no_dec,label = 'Deceased')
+    
+    plt.legend()
+    
 def simulate(model, timestamps, vaccinated, vaccination_day):
     total_count = 0
     days = 0
     previous_timestamp = 0
+    
+    model.no_susceptible.append(len(model.susceptible))
+    model.no_infected.append(len(model.infected))
+    model.no_recovered.append(len(model.recovered))
+    model.no_deceased.append(len(model.deceased))
 
     print("At day 0")
-    print("Number of susceptible: ", len(model.susceptible))
-    print("Number of infected: ", len(model.infected))
-    print("Number of recovered: ", len(model.recovered))
-    print("Number of deceased: ", len(model.deceased))
+    print("Number of susceptible: ", model.no_susceptible[0])
+    print("Number of infected: ", model.no_infected[0])
+    print("Number of recovered: ", model.no_recovered[0])
+    print("Number of deceased: ", model.no_deceased[0])
 
-    max_infections = len(model.infected)
+    max_infections = model.no_infected[0]
 
     while total_count < model.df.shape[0]:
         count = 0
@@ -112,10 +141,16 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         model.get_new_infected(infected_contact)
         model.get_new_deaths()
         
+        model.no_susceptible.append(len(model.susceptible))
+        model.no_infected.append(len(model.infected))
+        model.no_recovered.append(len(model.recovered))
+        model.no_deceased.append(len(model.deceased))
+        
         days = days + 1
 
         if(days == vaccination_day):
             model.vaccinate(vaccinated)
+            
         
         print("After Day ", days)
         print("Number of susceptible: ", len(model.susceptible))
@@ -136,8 +171,12 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
 def run(model, vaccinated, vaccination_day):
     # 105 timestamps are going to be clustered together and considered as one day.
     # This would make the dataset into 30 days
+
+
     timestamps_in_a_day = 105    
     model.init()
     result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
+    visualize(model)
     print(result)
     return result
+
