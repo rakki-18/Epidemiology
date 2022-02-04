@@ -30,7 +30,7 @@ def test_model():
         vaccination_strategy = mod.vaccination_strategy
         vaccinated = vaccination_strategy(model)
         
-        result = run(model,vaccinated,5)
+        result = run(model, vaccinated, 5)
         assert 'metrics' in result.keys()
         assert 'total_deaths' in result['metrics'].keys()
         assert result['metrics']['total_deaths'] >= 0

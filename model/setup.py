@@ -6,9 +6,5 @@ setup(
     name='sir_model',
     version='1.0.0',
     packages=find_packages(include=['model', 'model.*']),
-    install_requires=[
-        'pytest',
-        'numpy',
-        'pandas'
-    ],
+    install_requires=[],
 )

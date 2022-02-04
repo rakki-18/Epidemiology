@@ -38,7 +38,7 @@ def findAP(contact_graph,vertices,Time):
                 vaccinated.append(vertices[p])
     return vaccinated
       
-def APDetails(contact_graph, vertices, u, visited, parent, low, disc, AP,Time):
+def APDetails(contact_graph, vertices, u, visited, parent, low, disc, AP, Time):
 
     #Count of children in current node 
     children = 0
