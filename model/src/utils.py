@@ -10,7 +10,7 @@ class SIR:
     beta = 0.8 # Probability of getting infected on interaction with an infected person. 
     gamma = 0.3 # Probability of natural recovery for an infected person
     alpha = 0.05 # Probablity of an infected person dying
-    initial_infected = 12
+    initial_infected = 30
 
     # Vaccinate the people in the list 'vaccinated_people'
     def vaccinate(self, vaccinated_people):
@@ -55,11 +55,7 @@ class SIR:
 
     # Simulate new infected people
     def get_new_infected(self, infected_contact):
-        total = len(infected_contact)
-        new_infected_total = self.beta * total
-        new_infected = random.sample(infected_contact, k=int(new_infected_total))
-        # Remove duplicates
-        new_infected = list(set(new_infected))
+        new_infected = [person for person in infected_contact if random.random() <= self.beta]
         # Add them to infected
         for infected_person in new_infected:
             self.infected.append(infected_person)
@@ -67,8 +63,7 @@ class SIR:
 
     # Simulate natural recovery
     def get_new_recovered(self):
-        recovered_count = int(self.gamma * len(self.infected))
-        new_recovered = random.sample(self.infected, k=recovered_count)
+        new_recovered = [person for person in self.infected if random.random() <= self.gamma]
         # Add them to recovered
         for recovered_person in new_recovered:
             self.infected.remove(recovered_person)
@@ -76,8 +71,7 @@ class SIR:
 
     # Simulate deaths
     def get_new_deaths(self):
-        death_count = int(self.alpha * len(self.infected))
-        new_deaths = random.sample(self.infected, k=death_count)
+        new_deaths = [person for person in self.infected if random.random() <= self.alpha]
         # Add them to deceased
         for deceased_person in new_deaths:
             self.infected.remove(deceased_person)
@@ -118,15 +112,15 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
 
     while total_count < model.df.shape[0]:
         count = 0
-        infected_contact = []
+        infected_contact = set()
         while count < timestamps and total_count < model.df.shape[0]:
             person1 = int(model.df['Person 1'][total_count])
             person2 = int(model.df['Person 2'][total_count])
             # Check for transitions from susceptible to infected
             if model.person_type(person1) == 'susceptible' and model.person_type(person2) == 'infected':
-                infected_contact.append(person1)
+                infected_contact.add(person1)
             if model.person_type(person2) == 'susceptible' and model.person_type(person1) == 'infected':
-                infected_contact.append(person2)
+                infected_contact.add(person2)
             # If new timestamp, then increase count
             if(model.df['Time'][total_count] != previous_timestamp):
                 previous_timestamp = model.df['Time'][total_count]
