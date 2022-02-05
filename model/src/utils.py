@@ -1,6 +1,4 @@
-from statistics import mode
 import pandas as pd
-import os
 import random
 import numpy as np
 import matplotlib.pyplot as plt
