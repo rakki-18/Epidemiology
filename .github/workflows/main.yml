@@ -1,8 +1,6 @@
 
 on: 
   push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
@@ -13,18 +11,14 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@master
-    - name: Setup Python
+    - name: Setup python
       uses: actions/setup-python@v2
       with:
         python-version: "3.x"
-#     - name: Install pipenv
-#       run: |
-#         cd model && python -m pip install --upgrade pipenv wheel
-#     - id: cache-pipenv
-#       uses: actions/cache@v1
-#       with:
-#         path: ~/.local/share/virtualenvs
-#         key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+    - name: Install depedencies
+      run: |
+        cd model &&
+        pip install -r requirements.txt
     - name: Build
       run: |
         cd model && 

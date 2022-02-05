@@ -7,3 +7,5 @@ venv/
 
 .pytest_cache/
 sir_model.egg-info/
+
+.vscode/
