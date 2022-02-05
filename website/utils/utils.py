@@ -1,39 +1,18 @@
+from statistics import mode
 import pandas as pd
 import os
 import random
-<<<<<<< HEAD
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 class SIR:
-<<<<<<< HEAD
-    S = []
-    I = []
-    R = []
-    T = []
-    suscepted = []
-    infected = []
-    recovered = []
-    vaccinated = []
-=======
-    # Sets to keep track of people in the model
-    susceptible = set()
-    infected = set()
-    recovered = set()
-    vaccinated = set()
-    deceased = set()
->>>>>>> eff5a75c1c906d1f9fd2417997b1e73ce1ce32a8
-=======
-
-
-class SIR:
->>>>>>> origin/metric
     # Can be modified according to the disease scenario
-    beta = 0.8 # Probability of getting infected on interaction with an infected person. 
-    gamma = 0.3 # Probability of natural recovery for an infected person
-    alpha = 0.05 # Probablity of an infected person dying
-    initial_infected = 12
+    # Probability of getting infected on interaction with an infected person.
+    beta = 0.8
+    gamma = 0.3  # Probability of natural recovery for an infected person
+    alpha = 0.05  # Probablity of an infected person dying
+    initial_infected = 30
 
     # Vaccinate the people in the list 'vaccinated_people'
     def vaccinate(self, vaccinated_people):
@@ -50,14 +29,8 @@ class SIR:
     def __init__(self, df, metadata):
         self.df = df
         self.metadata = metadata
-        
+
     def init(self):
-<<<<<<< HEAD
-        for person in self.metadata['ID']:
-            self.susceptible.add(person)
-        
-        self.infected = random.sample(self.susceptible, self.initial_infected)
-=======
         # Sets to keep track of people in the model
         self.susceptible = set()
         self.infected = set()
@@ -65,28 +38,28 @@ class SIR:
         self.vaccinated = set()
         self.deceased = set()
         for person in self.metadata['ID']:
-            self.susceptible.add(person)
-        
-        self.infected = random.sample(list(self.susceptible), self.initial_infected)
->>>>>>> origin/metric
+            try:
+                self.susceptible.add(int(person))
+            except:
+                pass
+
+        self.infected = random.sample(
+            list(self.susceptible), self.initial_infected)
         for infected_person in self.infected:
             self.susceptible.remove(infected_person)
 
     # Determine which category person belongs to
     def person_type(self, person):
-        if(person in self.susceptible):
+        if person in self.susceptible:
             return 'susceptible'
-        if(person in self.infected):
+        if person in self.infected:
             return 'infected'
         return 'recovered'
 
     # Simulate new infected people
     def get_new_infected(self, infected_contact):
-        total = len(infected_contact)
-        new_infected_total = self.beta * total
-        new_infected = random.sample(infected_contact, k=int(new_infected_total))
-        # Remove duplicates
-        new_infected = list(set(new_infected))
+        new_infected = [
+            person for person in infected_contact if random.random() <= self.beta]
         # Add them to infected
         for infected_person in new_infected:
             self.infected.append(infected_person)
@@ -94,8 +67,8 @@ class SIR:
 
     # Simulate natural recovery
     def get_new_recovered(self):
-        recovered_count = int(self.gamma * len(self.infected))
-        new_recovered = random.sample(self.infected, k=recovered_count)
+        new_recovered = [
+            person for person in self.infected if random.random() <= self.gamma]
         # Add them to recovered
         for recovered_person in new_recovered:
             self.infected.remove(recovered_person)
@@ -103,12 +76,29 @@ class SIR:
 
     # Simulate deaths
     def get_new_deaths(self):
-        death_count = int(self.alpha * len(self.infected))
-        new_deaths = random.sample(self.infected, k=death_count)
+        new_deaths = [
+            person for person in self.infected if random.random() <= self.alpha]
         # Add them to deceased
         for deceased_person in new_deaths:
             self.infected.remove(deceased_person)
             self.deceased.add(deceased_person)
+
+
+def visualize(result):
+    no_sus = np.array(result['stats']['susceptible'])
+    no_inf = np.array(result['stats']['infected'])
+    no_rec = np.array(result['stats']['recovered'])
+    no_dec = np.array(result['stats']['deceased'])
+
+    time = np.array(range(len(no_sus)))
+
+    plt.plot(time, no_sus, label='Suscepted')
+    plt.plot(time, no_inf, label='Infected')
+    plt.plot(time, no_rec, label='Recovered')
+    plt.plot(time, no_dec, label='Deceased')
+
+    plt.legend()
+
 
 def simulate(model, timestamps, vaccinated, vaccination_day):
     total_count = 0
@@ -121,116 +111,73 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
 
+    no_susceptible = [len(model.susceptible)]
+    no_infected = [len(model.infected)]
+    no_recovered = [len(model.recovered)]
+    no_deceased = [len(model.deceased)]
+
     max_infections = len(model.infected)
 
     while total_count < model.df.shape[0]:
         count = 0
-        infected_contact = []
+        infected_contact = set()
         while count < timestamps and total_count < model.df.shape[0]:
-            person1 = model.df["Person 1"][total_count]
-            person2 = model.df["Person 2"][total_count]
+            person1 = int(model.df['Person 1'][total_count])
+            person2 = int(model.df['Person 2'][total_count])
             # Check for transitions from susceptible to infected
             if model.person_type(person1) == 'susceptible' and model.person_type(person2) == 'infected':
-                infected_contact.append(person1)
+                infected_contact.add(person1)
             if model.person_type(person2) == 'susceptible' and model.person_type(person1) == 'infected':
-                infected_contact.append(person2)
+                infected_contact.add(person2)
             # If new timestamp, then increase count
-            if(model.df["Time"][total_count] != previous_timestamp):
-                previous_timestamp = model.df["Time"][total_count]
+            if(model.df['Time'][total_count] != previous_timestamp):
+                previous_timestamp = model.df['Time'][total_count]
                 count = count + 1
             total_count = total_count + 1
-        
+
         model.get_new_recovered()
         model.get_new_infected(infected_contact)
-<<<<<<< HEAD
-<<<<<<< HEAD
-        no_sus = len(model.suscepted)
-        no_inf = len(model.infected)
-        no_rec = len(model.recovered)
-        model.S.append(no_sus)
-        model.I.append(no_inf)
-        model.R.append(no_rec)
-        model.T.append(days)
-        print("After Day ", days)
-        print("Number of susceptible: ", no_sus)
-        print("Number of infected: ", no_inf)
-        print("Number of recovered: ", no_rec)
-
-def visualize(model):
-    S = np.array(model.S)
-    I = np.array(model.I)
-    R = np.array(model.R)
-    T = np.array(model.T)
-    
-    plt.plot(T,S,label = "Susceptible")
-    plt.plot(T,I,label = "Infected")
-    plt.plot(T,R,label = "Recovered")
-    
-    plt.xlabel("Days")
-    plt.ylabel("No. of individuals")
-    
-    plt.legend()
-
-def run(model, vaccinated):
-#     current_directory = os.getcwd()
-#     print(current_directory)
-
-    df = pd.read_csv('../primaryschool.csv')
-=======
-=======
->>>>>>> origin/metric
         model.get_new_deaths()
-        
+
+        no_susceptible.append(len(model.susceptible))
+        no_infected.append(len(model.infected))
+        no_recovered.append(len(model.recovered))
+        no_deceased.append(len(model.deceased))
+
         days = days + 1
 
         if(days == vaccination_day):
             model.vaccinate(vaccinated)
-        
-        print("After Day ", days)
+
+        print(f"After {days} day(s) ")
         print("Number of susceptible: ", len(model.susceptible))
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
 
         max_infections = max(max_infections, len(model.infected))
-    
+
     return {
         'metrics': {
             'total_deaths': len(model.deceased),
             'peak_infections': max_infections
+        },
+        'stats': {
+            'susceptible': no_susceptible,
+            'infected': no_infected,
+            'recovered': no_recovered,
+            'deceased': no_deceased
         }
     }
 
 # The variable vaccination_day specifies the day after which the population must be vaccinated
+
+
 def run(model, vaccinated, vaccination_day):
-<<<<<<< HEAD
->>>>>>> eff5a75c1c906d1f9fd2417997b1e73ce1ce32a8
-=======
->>>>>>> origin/metric
     # 105 timestamps are going to be clustered together and considered as one day.
     # This would make the dataset into 30 days
-
-
-    timestamps_in_a_day = 105    
+    timestamps_in_a_day = 105
     model.init()
-<<<<<<< HEAD
-<<<<<<< HEAD:utils.py
-<<<<<<< HEAD
-    model.vaccinate(vaccinated)
-    simulate(model, df, timestamps_in_a_day)
-    visualize(model)
-=======
-    print(simulate(model, timestamps_in_a_day, vaccinated, vaccination_day))
->>>>>>> eff5a75c1c906d1f9fd2417997b1e73ce1ce32a8
-=======
-    return simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
->>>>>>> e00a8527a07e6ab3dc6bd8206b90a917acd0ab7f:website/utils/utils.py
-=======
-<<<<<<< HEAD:model/src/utils.py
     result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
-    print(result)
+    visualize(result)
     return result
-=======
-    return simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
->>>>>>> origin/metric:website/utils/utils.py
->>>>>>> origin/metric
