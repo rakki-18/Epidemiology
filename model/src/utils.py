@@ -2,6 +2,8 @@ import pandas as pd
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import networkx as nx
 
 class SIR:
     # Can be modified according to the disease scenario
@@ -74,6 +76,37 @@ class SIR:
         for deceased_person in new_deaths:
             self.infected.remove(deceased_person)
             self.deceased.add(deceased_person)
+    
+    # Create contact graph
+    def create_contact_graph(self):
+        contact_graph = []
+        index=0
+        while index < self.df.shape[0]:
+            id1=self.df['Person 1'][index]
+            id2=self.df['Person 2'][index]
+            if [id1,id2] not in contact_graph and [id2,id1] not in contact_graph:
+                contact_graph.append([id1,id2])
+            index+=1
+        return contact_graph
+    
+    # Visualize the contact graph
+    def visualize_graph(self,contact_graph,vaccinated):
+        G = nx.Graph()
+        G.add_edges_from(contact_graph)
+        plt.figure(figsize=(40,40)) 
+        pos = nx.kamada_kawai_layout(G)
+        nx.draw_networkx(G, pos=pos,nodelist=list(self.susceptible), node_size=1800,node_color='dodgerblue', font_size = 17)   
+        nx.draw_networkx(G, pos=pos,nodelist=list(self.infected), node_size=1800,node_color='orange', font_size = 17)         
+        nx.draw_networkx(G, pos=pos,nodelist=list(self.recovered), node_size=1800,node_color='limegreen', font_size = 17)         
+        nx.draw_networkx(G, pos=pos,nodelist=list(self.deceased), node_size=1800,node_color='orangered', font_size = 17)     
+        nx.draw_networkx(G, pos=pos,nodelist=list(vaccinated), node_size=1800,node_color='yellow', font_size = 17)
+        S_blue = mpatches.Patch(color='dodgerblue', label='Susceptible')
+        I_orange = mpatches.Patch(color='orange', label='Infected')
+        R_green = mpatches.Patch(color='limegreen', label='Recovered')
+        D_red = mpatches.Patch(color='orangered', label='Deceased')
+        V_yellow = mpatches.Patch(color='yellow', label='Vaccinated')
+        plt.legend(handles=[S_blue,I_orange,R_green,D_red,V_yellow],prop={"size":20})         
+        plt.show()    
             
 def visualize(result):
     no_sus = np.array(result['stats']['susceptible'])
@@ -94,18 +127,18 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     total_count = 0
     days = 0
     previous_timestamp = 0
-
+    contact_graph=model.create_contact_graph()
     print("At day 0")
     print("Number of susceptible: ", len(model.susceptible))
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
+    model.visualize_graph(contact_graph,vaccinated)
 
     no_susceptible = [len(model.susceptible)]
     no_infected = [len(model.infected)]
     no_recovered = [len(model.recovered)]
     no_deceased = [len(model.deceased)]
-
     max_infections = len(model.infected)
 
     while total_count < model.df.shape[0]:
@@ -144,7 +177,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
-
+        model.visualize_graph(contact_graph,vaccinated)
         max_infections = max(max_infections, len(model.infected))
     
     return {
@@ -169,4 +202,3 @@ def run(model, vaccinated, vaccination_day):
     result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
     visualize(result)
     return result
-
