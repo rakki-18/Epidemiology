@@ -87,12 +87,12 @@ class SIR:
             if [id1,id2] not in contact_graph and [id2,id1] not in contact_graph:
                 contact_graph.append([id1,id2])
             index+=1
-        return contact_graph
-    
-    # Visualize the contact graph
-    def visualize_graph(self,contact_graph,vaccinated):
         G = nx.Graph()
         G.add_edges_from(contact_graph)
+        return G
+    
+    # Visualize the contact graph
+    def visualize_graph(self,G,vaccinated):
         plt.figure(figsize=(40,40)) 
         pos = nx.kamada_kawai_layout(G)
         nx.draw_networkx(G, pos=pos,nodelist=list(self.susceptible), node_size=1800,node_color='dodgerblue', font_size = 17)   
@@ -127,13 +127,13 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     total_count = 0
     days = 0
     previous_timestamp = 0
-    contact_graph=model.create_contact_graph()
+    G=model.create_contact_graph()
     print("At day 0")
     print("Number of susceptible: ", len(model.susceptible))
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
-    model.visualize_graph(contact_graph,vaccinated)
+    model.visualize_graph(G,vaccinated)
 
     no_susceptible = [len(model.susceptible)]
     no_infected = [len(model.infected)]
@@ -177,7 +177,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
-        model.visualize_graph(contact_graph,vaccinated)
+        model.visualize_graph(G,vaccinated)
         max_infections = max(max_infections, len(model.infected))
     
     return {
