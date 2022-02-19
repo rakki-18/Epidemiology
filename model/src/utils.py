@@ -92,14 +92,15 @@ class SIR:
         return G
     
     # Visualize the contact graph
-    def visualize_graph(self,G,vaccinated):
+    def visualize_graph(self,G,vaccinated,days,vaccination_day):
         plt.figure(figsize=(40,40)) 
         pos = nx.kamada_kawai_layout(G)
         nx.draw_networkx(G, pos=pos,nodelist=list(self.susceptible), node_size=1800,node_color='dodgerblue', font_size = 17)   
         nx.draw_networkx(G, pos=pos,nodelist=list(self.infected), node_size=1800,node_color='orange', font_size = 17)         
         nx.draw_networkx(G, pos=pos,nodelist=list(self.recovered), node_size=1800,node_color='limegreen', font_size = 17)         
-        nx.draw_networkx(G, pos=pos,nodelist=list(self.deceased), node_size=1800,node_color='orangered', font_size = 17)     
-        nx.draw_networkx(G, pos=pos,nodelist=list(vaccinated), node_size=1800,node_color='yellow', font_size = 17)
+        nx.draw_networkx(G, pos=pos,nodelist=list(self.deceased), node_size=1800,node_color='orangered', font_size = 17) 
+        if (days>=vaccination_day):
+            nx.draw_networkx(G, pos=pos,nodelist=list(vaccinated), node_size=1800,node_color='yellow', font_size = 17)
         S_blue = mpatches.Patch(color='dodgerblue', label='Susceptible')
         I_orange = mpatches.Patch(color='orange', label='Infected')
         R_green = mpatches.Patch(color='limegreen', label='Recovered')
@@ -133,7 +134,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
-    model.visualize_graph(G,vaccinated)
+    model.visualize_graph(G,vaccinated,days,vaccination_day)
 
     no_susceptible = [len(model.susceptible)]
     no_infected = [len(model.infected)]
@@ -177,7 +178,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
-        model.visualize_graph(G,vaccinated)
+        model.visualize_graph(G,vaccinated,days,vaccination_day)
         max_infections = max(max_infections, len(model.infected))
     
     return {
