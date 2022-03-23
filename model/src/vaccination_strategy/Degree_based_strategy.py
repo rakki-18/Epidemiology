@@ -1,44 +1,15 @@
 import pandas as pd
-'''import math
-adj = []
-class node:
-    def __init__(self,id,left = None,right = None):
-        self.id = id
-        self.left = left
-        self.right = right
-        self.right_length = 0
-        self.left_length = 0
-    def search(self,person):
-        if not (self):
-            return 0
-        if person == self.id:
-            return 1
-        elif person > self.id:
-            search(self.right,person)
-        else:
-            search(self.left,person)
-    def Insert(self,p):
-        if self.right_length == self.left_length:
-            if p.id > self.id:
-                if self.right == None:
-                    self.right = p
-                else:
-                    Insert(self.right,n)
-                self.right_length += 1
-            else: 
-                Insert(self.left,n)
-                self.left_length += 1
-        elif self.right_'''
 
-def vaccination_strategy(model,vac_percent,D_day):
+
+def vaccination_strategy(model, vac_percent, D_day):
     size = model.df.shape[0]
-    start_index = int(model.metadata["ID"][0])
-    end_index = int(model.metadata["ID"][model.metadata.shape[0] - 1])
+    start_index = int(model.metadata["id"][1])
+    end_index = int(model.metadata["id"][model.metadata.shape[0] - 1])
     pop_count = end_index - start_index + 1
 
     days = 30
-    start = int(model.df["Time"][1])
-    end = int(model.df["Time"][size - 1])
+    start = int(model.df["timestamp"][1])
+    end = int(model.df["timestamp"][size - 1])
     Range = (end - start + 1) / 20
     per_day = Range // days
 
@@ -47,10 +18,9 @@ def vaccination_strategy(model,vac_percent,D_day):
 
     for i in range(pop_count):
         degree.append(0)
-        #adj.append(None)
         adj.append([])
 
-    prev_time = int(model.df["Time"][1])
+    prev_time = int(model.df["timestamp"][1])
     time = prev_time
     timecount = 0
     daycount = 0
@@ -59,19 +29,16 @@ def vaccination_strategy(model,vac_percent,D_day):
         if time != prev_time:
             prev_time = time
             timecount += 1
-            if timecount % per_day == 0:
+            if timecount % 4 == 1:  # 4 timestamps makes one day
                 daycount += 1
 
-        n1 = int(model.df["Person 1"][time])
-        n2 = int(model.df["Person 2"][time])
-        #if not(adj[n1 - start_index]) or not(adj[n1 - start_index].search(n2)):
+        n1 = int(model.df["p1"][time])
+        n2 = int(model.df["p2"][time])
+
         if n2 not in adj[n1 - start_index]:
             degree[n1 - start_index] += 1
             degree[n2 - start_index] += 1
-            #person1 = node(n1)
-            #person2 = node(n2)
-            #adj[n1 - start_index].Insert(person2)
-            #adj[n2 - start_index].Insert(person1)
+
             adj[n1 - start_index].append(n2)
             adj[n2 - start_index].append(n1)
 
@@ -97,4 +64,3 @@ def vaccination_strategy(model,vac_percent,D_day):
             break
 
     return vaccinated
-
