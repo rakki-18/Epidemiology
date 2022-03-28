@@ -9,9 +9,9 @@ import networkx as nx
 class SIR:
     # Can be modified according to the disease scenario
     # Probability of getting infected on interaction with an infected person.
-    beta = 0.8
-    gamma = 0.3  # Probability of natural recovery for an infected person
-    alpha = 0.05  # Probablity of an infected person dying
+    beta = 0.1
+    gamma = 0.03  # Probability of natural recovery for an infected person
+    alpha = 0.006  # Probablity of an infected person dying
     initial_infected = 30
 
     # Vaccinate the people in the list 'vaccinated_people'
