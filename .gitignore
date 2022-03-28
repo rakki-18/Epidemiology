@@ -9,3 +9,5 @@ venv/
 sir_model.egg-info/
 
 .vscode/
+
+/uploads
