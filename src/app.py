@@ -29,9 +29,7 @@ def index():
 @app.route('/prediction')
 def prediction():
 
-    metadata = pd.read_csv('model/src/data/generation/metadata.csv', sep='\t', lineterminator='\n', names=['id','age', 'apartment','home', 'family','office','school'])
-    # Have to remove the first row as it is headings duplicated
-    metadata = metadata.iloc[1:, : ]
+    metadata = pd.read_csv('model/src/data/generation/metadata.csv')
     df = pd.read_csv('model/src/data/generation/contact_network.csv')
     model = SIR(
         metadata=metadata,
@@ -49,6 +47,7 @@ def prediction():
     vaccinated = degree_based_vaccination_strategy(model,20,5)
     output = run(model, vaccinated, 5)
     full_output["Degree_based"] = output
+    
     return render_template('predict.html', output=full_output)
 
 
