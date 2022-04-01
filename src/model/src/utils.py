@@ -158,7 +158,7 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
-    model.visualize_graph(G, vaccinated, days, vaccination_day)
+    # model.visualize_graph(G, vaccinated, days, vaccination_day)
 
     no_susceptible = [len(model.susceptible)]
     no_infected = [len(model.infected)]
@@ -202,10 +202,10 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
-        model.visualize_graph(G, vaccinated, days, vaccination_day)
+        # model.visualize_graph(G, vaccinated, days, vaccination_day)
         max_infections = max(max_infections, len(model.infected))
 
-    makeVideo()
+    # makeVideo()
 
     return {
         'metrics': {
