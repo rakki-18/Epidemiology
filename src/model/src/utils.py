@@ -13,8 +13,7 @@ figArr = []
 
 class SIR:
     # Can be modified according to the disease scenario
-    # Probability of getting infected on interaction with an infected person.
-    beta = 0.1
+    beta = 0.1  # Probability of getting infected on interaction with an infected person.
     gamma = 0.03  # Probability of natural recovery for an infected person
     alpha = 0.006  # Probablity of an infected person dying
     initial_infected = 30
@@ -203,10 +202,10 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         print("Number of infected: ", len(model.infected))
         print("Number of recovered: ", len(model.recovered))
         print("Number of deceased: ", len(model.deceased))
-        # model.visualize_graph(G, vaccinated, days, vaccination_day)
+        model.visualize_graph(G, vaccinated, days, vaccination_day)
         max_infections = max(max_infections, len(model.infected))
 
-    # makeVideo()
+    makeVideo()
 
     return {
         'metrics': {
@@ -230,6 +229,7 @@ def run(model, vaccinated, vaccination_day):
     timestamps_in_a_day = 4
     model.init()
     result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
+    visualize(result)
     return result
 
 
