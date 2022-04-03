@@ -1,17 +1,8 @@
+import numpy as np
 import pandas as pd
-import os
-import random
-import sys
-from flask import Flask, render_template, url_for, request, redirect
-from werkzeug.utils import secure_filename
+from flask import Flask, render_template, url_for, request, redirect, send_from_directory, send_file
 import matplotlib.pyplot as plt
 
-
-# from utils.utils import SIR, run
-# from utils.random_strategy import vaccination_strategy
-
-
-# sys.path.append('../model')
 from model.src.utils import SIR, run
 from model.src.vaccination_strategy.random_strategy import random_vaccination_strategy
 from model.src.vaccination_strategy.degree_based_strategy import degree_based_vaccination_strategy
@@ -21,10 +12,33 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == "POST":
-        
         return redirect(url_for('prediction'))
     return render_template('index.html')
 
+def make_plot(data, id):
+
+    fig = plt.figure(figsize=(10, 6))
+
+    no_sus = np.array(data['stats']['susceptible'])
+    no_inf = np.array(data['stats']['infected'])
+    no_rec = np.array(data['stats']['recovered'])
+    no_dec = np.array(data['stats']['deceased'])
+
+    time = np.array(range(len(no_sus)))
+
+    plt.plot(time, no_sus, label='Suscepted')
+    plt.plot(time, no_inf, label='Infected')
+    plt.plot(time, no_rec, label='Recovered')
+    plt.plot(time, no_dec, label='Deceased')
+
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('assets/' + id + '.jpeg')
+    plt.close(fig)
+
+@app.route('/get_assets/<asset_name>')
+def get_assets(asset_name):
+    return send_file("assets/" + asset_name, attachment_filename = asset_name)
 
 @app.route('/prediction')
 def prediction():
@@ -37,16 +51,20 @@ def prediction():
     )
 
     full_output = {}
+
     # Random Vaccination Strategy
+    id = "simulation_random"
     vaccinated = random_vaccination_strategy(model)
-    output = run(model, vaccinated, 5)
-    full_output["Random"] = output
-    
+    output = run(model, vaccinated, 5, id + '.webm')
+    full_output[id] = output
+    make_plot(full_output[id], id)
 
     # Degree based Vaccination Strategy
-    vaccinated = degree_based_vaccination_strategy(model,20,5)
-    output = run(model, vaccinated, 5)
-    full_output["Degree_based"] = output
+    id = "simulation_degree"
+    vaccinated = degree_based_vaccination_strategy(model, 20, 5)
+    output = run(model, vaccinated, 5, id + '.webm')
+    full_output[id] = output
+    make_plot(full_output[id], id)
     
     return render_template('predict.html', output=full_output)
 
