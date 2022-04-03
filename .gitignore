@@ -11,3 +11,6 @@ sir_model.egg-info/
 .vscode/
 
 /uploads
+
+src/assets
+src/graph_screenshots
