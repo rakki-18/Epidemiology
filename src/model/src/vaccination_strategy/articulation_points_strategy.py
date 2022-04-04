@@ -1,7 +1,6 @@
 from collections import defaultdict
-import pandas as pd
 
-def vaccination_strategy(model):
+def articulation_points_based_vaccination_strategy(model):
     contact_data = model.df
     contact_graph = defaultdict(list)
     vertices=[]

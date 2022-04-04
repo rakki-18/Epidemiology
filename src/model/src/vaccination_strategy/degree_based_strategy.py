@@ -1,6 +1,3 @@
-import pandas as pd
-
-
 def degree_based_vaccination_strategy(model, vac_percent, D_day):
     size = model.df.shape[0]
     start_index = int(model.metadata["id"][1])
