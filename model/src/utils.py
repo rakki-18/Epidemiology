@@ -45,6 +45,8 @@ class SIR:
         for infected_person in self.infected:
             self.susceptible.remove(infected_person)
 
+        self.graph = self.create_contact_graph()
+
     # Determine which category person belongs to
     def person_type(self, person):
         if person in self.susceptible:
@@ -79,17 +81,17 @@ class SIR:
     
     # Create contact graph
     def create_contact_graph(self):
-        contact_graph = []
-        index=0
+        edges = set()
+        index = 0
         while index < self.df.shape[0]:
-            id1=self.df['Person 1'][index]
-            id2=self.df['Person 2'][index]
-            if [id1,id2] not in contact_graph and [id2,id1] not in contact_graph:
-                contact_graph.append([id1,id2])
-            index+=1
-        G = nx.Graph()
-        G.add_edges_from(contact_graph)
-        return G
+            id1 = self.df['Person 1'][index]
+            id2 = self.df['Person 2'][index]
+            if [id1, id2] not in edges and [id2, id1] not in edges:
+                edges.append([id1,id2])
+            index += 1
+        graph = nx.Graph()
+        graph.add_edges_from(list(edges))
+        return graph
     
     # Visualize the contact graph
     def visualize_graph(self,G,vaccinated):
