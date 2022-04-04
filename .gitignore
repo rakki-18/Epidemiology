@@ -9,5 +9,3 @@ venv/
 sir_model.egg-info/
 
 .vscode/
-
-generation/data/

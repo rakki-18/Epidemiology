@@ -45,7 +45,7 @@ class SIR:
         for infected_person in self.infected:
             self.susceptible.remove(infected_person)
 
-        self.graph = self.create_contact_graph()
+        self.graph, self.positions = self.create_contact_graph()
 
     # Determine which category person belongs to
     def person_type(self, person):
@@ -81,34 +81,29 @@ class SIR:
     
     # Create contact graph
     def create_contact_graph(self):
-        edges = set()
         index = 0
-        while index < self.df.shape[0]:
-            id1 = self.df['Person 1'][index]
-            id2 = self.df['Person 2'][index]
-            if [id1, id2] not in edges and [id2, id1] not in edges:
-                edges.append([id1,id2])
-            index += 1
         graph = nx.Graph()
-        graph.add_edges_from(list(edges))
-        return graph
+        while index < self.metadata.shape[0]:
+            graph.add_node(int(self.metadata['ID'][index]))
+            index += 1
+        pos = nx.random_layout(graph)
+        return graph, pos
     
     # Visualize the contact graph
-    def visualize_graph(self,G,vaccinated):
+    def visualize_graph(self, vaccinated):
         plt.figure(figsize=(40,40)) 
-        pos = nx.kamada_kawai_layout(G)
-        nx.draw_networkx(G, pos=pos,nodelist=list(self.susceptible), node_size=1800,node_color='dodgerblue', font_size = 17)   
-        nx.draw_networkx(G, pos=pos,nodelist=list(self.infected), node_size=1800,node_color='orange', font_size = 17)         
-        nx.draw_networkx(G, pos=pos,nodelist=list(self.recovered), node_size=1800,node_color='limegreen', font_size = 17)         
-        nx.draw_networkx(G, pos=pos,nodelist=list(self.deceased), node_size=1800,node_color='orangered', font_size = 17)     
-        nx.draw_networkx(G, pos=pos,nodelist=list(vaccinated), node_size=1800,node_color='yellow', font_size = 17)
-        S_blue = mpatches.Patch(color='dodgerblue', label='Susceptible')
-        I_orange = mpatches.Patch(color='orange', label='Infected')
-        R_green = mpatches.Patch(color='limegreen', label='Recovered')
-        D_red = mpatches.Patch(color='orangered', label='Deceased')
-        V_yellow = mpatches.Patch(color='yellow', label='Vaccinated')
-        plt.legend(handles=[S_blue,I_orange,R_green,D_red,V_yellow],prop={"size":20})         
-        plt.show()    
+        nx.draw_networkx(self.graph, pos=self.positions, nodelist=list(self.susceptible), node_size=1800,node_color='dodgerblue', font_size = 17)   
+        nx.draw_networkx(self.graph, pos=self.positions, nodelist=list(self.infected), node_size=1800,node_color='orange', font_size = 17)         
+        nx.draw_networkx(self.graph, pos=self.positions, nodelist=list(self.recovered), node_size=1800,node_color='limegreen', font_size = 17)         
+        nx.draw_networkx(self.graph, pos=self.positions, nodelist=list(self.deceased), node_size=1800,node_color='orangered', font_size = 17)     
+        nx.draw_networkx(self.graph, pos=self.positions, nodelist=list(vaccinated), node_size=1800,node_color='yellow', font_size = 17)
+        s_blue = mpatches.Patch(color='dodgerblue', label='Susceptible')
+        i_orange = mpatches.Patch(color='orange', label='Infected')
+        r_green = mpatches.Patch(color='limegreen', label='Recovered')
+        d_red = mpatches.Patch(color='orangered', label='Deceased')
+        v_yellow = mpatches.Patch(color='yellow', label='Vaccinated')
+        plt.legend(handles=[s_blue, i_orange, r_green, d_red, v_yellow], prop={"size":20})
+        plt.show()
             
 def visualize(result):
     no_sus = np.array(result['stats']['susceptible'])
@@ -124,36 +119,40 @@ def visualize(result):
     plt.plot(time, no_dec, label='Deceased')
     
     plt.legend()
-    
-def simulate(model, timestamps, vaccinated, vaccination_day):
-    total_count = 0
-    days = 0
-    previous_timestamp = 0
-    G=model.create_contact_graph()
-    print("At day 0")
+
+def display_stats(day, model):
+    print(f"At day {day}")
     print("Number of susceptible: ", len(model.susceptible))
     print("Number of infected: ", len(model.infected))
     print("Number of recovered: ", len(model.recovered))
     print("Number of deceased: ", len(model.deceased))
-    model.visualize_graph(G,vaccinated)
+    
+def simulate(model, timespan, vaccinated, vaccination_day):
+    total_count = 0
+    days = -1
+    previous_timestamp = 0
+    
+    no_susceptible = []
+    no_infected = []
+    no_recovered = []
+    no_deceased = []
+    max_infections = -1
 
-    no_susceptible = [len(model.susceptible)]
-    no_infected = [len(model.infected)]
-    no_recovered = [len(model.recovered)]
-    no_deceased = [len(model.deceased)]
-    max_infections = len(model.infected)
+    while days <= timespan:
+        model.graph.remove_edges_from(list(model.graph.edges()))
 
-    while total_count < model.df.shape[0]:
         count = 0
         infected_contact = set()
-        while count < timestamps and total_count < model.df.shape[0]:
+        while total_count < model.df.shape[0] and model.df['Time'][total_count] <= days * 4:
             person1 = int(model.df['Person 1'][total_count])
             person2 = int(model.df['Person 2'][total_count])
             # Check for transitions from susceptible to infected
             if model.person_type(person1) == 'susceptible' and model.person_type(person2) == 'infected':
                 infected_contact.add(person1)
+                model.graph.add_edge(person1, person2)
             if model.person_type(person2) == 'susceptible' and model.person_type(person1) == 'infected':
                 infected_contact.add(person2)
+                model.graph.add_edge(person2, person1)
             # If new timestamp, then increase count
             if(model.df['Time'][total_count] != previous_timestamp):
                 previous_timestamp = model.df['Time'][total_count]
@@ -168,18 +167,15 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
         no_infected.append(len(model.infected))
         no_recovered.append(len(model.recovered))
         no_deceased.append(len(model.deceased))
-        
+
         days = days + 1
 
         if(days == vaccination_day):
             model.vaccinate(vaccinated)
-            
-        print(f"After {days} day(s) ")
-        print("Number of susceptible: ", len(model.susceptible))
-        print("Number of infected: ", len(model.infected))
-        print("Number of recovered: ", len(model.recovered))
-        print("Number of deceased: ", len(model.deceased))
-        model.visualize_graph(G,vaccinated)
+
+        display_stats(days, model)
+        model.visualize_graph(vaccinated)
+
         max_infections = max(max_infections, len(model.infected))
     
     return {
@@ -199,8 +195,8 @@ def simulate(model, timestamps, vaccinated, vaccination_day):
 def run(model, vaccinated, vaccination_day):
     # 105 timestamps are going to be clustered together and considered as one day.
     # This would make the dataset into 30 days
-    timestamps_in_a_day = 105    
+    timespan = 30 # months
     model.init()
-    result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day)
+    result = simulate(model, timespan, vaccinated, vaccination_day)
     visualize(result)
     return result
