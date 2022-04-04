@@ -146,18 +146,12 @@ def visualize(result):
 
 
 
-def simulate(model, timestamps, vaccinated, vaccination_day, generated_video_name = False):
+def simulate(model, timespan, vaccinated, vaccination_day, generated_video_name = False):
 
     total_count = 0
-    days = 0
+    days = -1
     previous_timestamp = 0
 
-    print("At day 0")
-    print("Number of susceptible: ", len(model.susceptible))
-    print("Number of infected: ", len(model.infected))
-    print("Number of recovered: ", len(model.recovered))
-    print("Number of deceased: ", len(model.deceased))
-    
     if generated_video_name:
         model.create_contact_graph()
         os.system('mkdir -p graph_screenshots')
@@ -169,10 +163,10 @@ def simulate(model, timestamps, vaccinated, vaccination_day, generated_video_nam
     no_deceased = [len(model.deceased)]
     max_infections = len(model.infected)
 
-    while total_count < model.df.shape[0]:
+    while days <= timespan:
         count = 0
         infected_contact = set()
-        while count < timestamps and total_count < model.df.shape[0]:
+        while total_count < model.df.shape[0] and model.df['timestamp'][total_count] < days * 4:
             person1 = int(model.df['p1'][total_count])  # p1 -> Person 1
             person2 = int(model.df['p2'][total_count])  # p2 -> Person 2
             # Check for transitions from susceptible to infected
@@ -236,11 +230,9 @@ def simulate(model, timestamps, vaccinated, vaccination_day, generated_video_nam
 
 
 def run(model, vaccinated, vaccination_day, generated_video_name = False):
-    # 4 timestamps are going to be clustered together and considered as one day.
-    # This would make the dataset into 30 days
-    timestamps_in_a_day = 4
+    timespan = 30
     model.init()
-    result = simulate(model, timestamps_in_a_day, vaccinated, vaccination_day, generated_video_name)
+    result = simulate(model, timespan, vaccinated, vaccination_day, generated_video_name)
     visualize(result)
     return result
 

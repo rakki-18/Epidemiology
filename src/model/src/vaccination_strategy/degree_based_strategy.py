@@ -1,4 +1,6 @@
-def degree_based_vaccination_strategy(model, vac_percent, D_day):
+def vaccination_strategy(model):
+    vac_percent = 20
+    d_day = 5
     size = model.df.shape[0]
     start_index = int(model.metadata["id"][1])
     end_index = int(model.metadata["id"][model.metadata.shape[0] - 1])
@@ -22,7 +24,7 @@ def degree_based_vaccination_strategy(model, vac_percent, D_day):
     timecount = 0
     daycount = 0
 
-    while daycount < D_day:
+    while daycount < d_day:
         if time != prev_time:
             prev_time = time
             timecount += 1

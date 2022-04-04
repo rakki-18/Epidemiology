@@ -1,14 +1,14 @@
 from collections import defaultdict
 
-def articulation_points_based_vaccination_strategy(model):
+def vaccination_strategy(model):
     contact_data = model.df
     contact_graph = defaultdict(list)
     vertices=[]
     vaccination_count = int(0.2 * model.metadata.shape[0])
     index=0
     while index < contact_data.shape[0]:
-        id1=contact_data['Person 1'][index]
-        id2=contact_data['Person 2'][index]
+        id1=contact_data['p1'][index]
+        id2=contact_data['p2'][index]
         if not(id1 in contact_graph.keys() and id2 in contact_graph[id1]):
           contact_graph[id1].append(id2)
           contact_graph[id2].append(id1)
