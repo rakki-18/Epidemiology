@@ -17,10 +17,20 @@ h2::before {
   display: block;
 }
 
+/* .container > div {
+  display: flex;
+  gap: 3%;
+}
+
+.para-img {
+  display: inline-block;
+} */
+
 .row {
   gap: 2%;
 }
 
+.simulation-button-container,
 .output-titles {
   margin-top: 5%;
 }

@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.method == "POST":
-        return redirect(url_for('prediction'))
+    # if request.method == "POST":
+    #     return redirect(url_for('prediction'))
     return render_template('index.html')
 
 def make_plot(data, id):
@@ -75,7 +75,7 @@ def prediction():
     full_output[id] = output
     make_plot(full_output[id], id)
     
-    return render_template('predict.html', output=full_output)
+    return render_template('index.html', output=full_output)
 
 
 if __name__ == '__main__':
