@@ -7,8 +7,8 @@ sys.path.append('../')
 
 from src.utils import SIR, run
 
-metadata = pd.read_csv('src/dataset/metadata.csv', sep='\t', lineterminator='\n', names=['ID', 'Class', 'Sex'])
-df = pd.read_csv('src/dataset/contact_network.csv')
+metadata = pd.read_csv('src/data/generation/metadata.csv')
+df = pd.read_csv('src/data/generation/contact_network.csv')
 
 def test_model():
     model = SIR(

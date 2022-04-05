@@ -3,8 +3,14 @@
 IEEE NITK year-long project
 
 # Setting Up
-- When in the root directory inside your terminal, change directory to the subfolder `model` using `cd model`
-- Setup a virtual environment to install dependencies. Run `python -m venv venv` and then `pip install -r ./requirements.txt`
+- When in the root directory inside your terminal, change directory to the subfolder `src/model` using `cd`
+- Setup a virtual environment to install dependencies. Run the following commands to setup a virtualenv and install dependencies
+### Windows
+```cmd
+python -m venv venv
+venv/Scripts/activate
+pip install -r ./requirements.txt
+```
 - Execute `python ./setup.py develop` to install the package
 - Execute `pytest` to check if everything is working ok.
 

@@ -1,14 +1,235 @@
-{% extends 'base.html' %}
-
-{% block head %}
+{% extends 'base.html' %} {% block head %}
 <title>Epidemiology</title>
-{% endblock %}
+{% endblock %} {% block body %}
 
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Modeling Disease Outbreak</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="offcanvas offcanvas-end navbar-dark bg-dark"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+      data-bs-scroll="true"
+    >
+      <div class="offcanvas-header">
+        <h5 class="text-light offcanvas-title" id="offcanvasNavbarLabel">
+          Contents
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 bg-dark">
+          <li class="nav-item">
+            <a class="nav-link" href="#Home-target">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Compartmentalized-target"
+              >Compartmentalized (SIR) model</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Contact-target">Contact networks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Vaccination-target"
+              >Vaccination strategies</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Future-target">Future work</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
 
-{% block body %}
-<h2> Epidemiological spread</h2>
+<div class="container">
+  <h2 id="Home-target">Project Description</h2>
+  <p class="lead">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+  </p>
+</div>
+
+<div class="container">
+  <form action="/" method="POST" enctype="multipart/form-data">
+    <input href="" type="submit" class="btn btn-dark" value="Run Simulation" />
+  </form>
+</div>
+
+<div class="container">
+  <h2 id="Compartmentalized-target">SIR Model</h2>
+  <p class="lead">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+  </p>
+</div>
+<div class="container">
+  <h2 id="Contact-target">Contact Networks</h2>
+  <p class="lead">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+  </p>
+</div>
+<div class="container">
+  <h2 id="Vaccination-target">Vaccination Strategies</h2>
+  <p class="lead">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+  </p>
+  <!-- <img
+    src="{{ url_for('get_assets', asset_name = 'simulation_random.jpeg') }}"
+    class="simulation-plot"
+  />
+  <img src = {{ url_for('get_assets', asset_name = 'simulation_degree.jpeg') }}
+  class="simulation-plot"/> -->
+</div>
+
+<div class="container">
+  <div class="row output-titles">
+    <div class="col d-flex justify-content-center border">
+      <h3>Random Simulation</h3>
+    </div>
+    <div class="col d-flex justify-content-center border">
+      <h3>Degree Based Simulation</h3>
+    </div>
+    <div class="col d-flex justify-content-center border">
+      <h3>Occupation Based Simulation</h3>
+    </div>
+  </div>
+  <div class="row output-videos">
+    <div class="col d-flex justify-content-center border">
+      <video width="320" height="240" controls class="simulation-video">
+        <source
+          src="{{ url_for('get_assets', asset_name = 'simulation_random.webm') }}"
+          type="video/webm"
+        />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="col d-flex justify-content-center border">
+      <video width="320" height="240" controls class="simulation-video">
+        <source
+          src="{{ url_for('get_assets', asset_name = 'simulation_degree.webm') }}"
+          type="video/webm"
+        />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="col d-flex justify-content-center border">
+      Variable width content
+    </div>
+  </div>
+  <div class="row output-graphs">
+    <div class="col d-flex justify-content-center border">
+      <img
+        src="{{ url_for('get_assets', asset_name = 'simulation_random.jpeg') }}"
+        class="simulation-plot"
+      />
+    </div>
+    <div class="col d-flex justify-content-center border">
+      <img
+        src="{{ url_for('get_assets', asset_name = 'simulation_degree.jpeg') }}"
+        class="simulation-plot"
+      />
+    </div>
+    <div class="col d-flex justify-content-center border">
+      Variable width content
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h2 id="Future-target">ML based vaccination</h2>
+  <p class="lead">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
+    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
+    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
+    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
+    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+  </p>
+</div>
+
+<!-- <h2>Epidemiological spread</h2>
 <form action="/" method="POST" enctype="multipart/form-data">
-    
-    <input type="submit" value="Run simulation">
-</form>
+  <input type="submit" value="Run simulation" />
+</form> -->
 {% endblock %}

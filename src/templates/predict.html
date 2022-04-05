@@ -1,21 +1,27 @@
-{% extends 'base.html' %}
-
-{% block head %}
+{% extends 'base.html' %} {% block head %}
 <title>Epidemiology Prediction</title>
-{% endblock %}
-
-
-{% block body %}
-<h2> The epidemic spreads as follows:</h2>
+{% endblock %} {% block body %}
+<h2>The epidemic spreads as follows:</h2>
 <video width="320" height="240" controls class="simulation-video">
-    <source src = {{ url_for('get_assets', asset_name = 'simulation_random.webm') }} type="video/webm">
-    Your browser does not support the video tag.
+  <source
+    src="{{ url_for('get_assets', asset_name = 'simulation_random.webm') }}"
+    type="video/webm"
+  />
+  Your browser does not support the video tag.
 </video>
 <video width="320" height="240" controls class="simulation-video">
-    <source src = {{ url_for('get_assets', asset_name = 'simulation_degree.webm') }} type="video/webm">
-    Your browser does not support the video tag.
+  <source
+    src="{{ url_for('get_assets', asset_name = 'simulation_degree.webm') }}"
+    type="video/webm"
+  />
+  Your browser does not support the video tag.
 </video>
-<img src = {{ url_for('get_assets', asset_name = 'simulation_random.jpeg') }} class="simulation-plot"/>
-<img src = {{ url_for('get_assets', asset_name = 'simulation_degree.jpeg') }} class="simulation-plot"/>
-
-{% endblock %}
+<img
+  src="{{ url_for('get_assets', asset_name = 'simulation_random.jpeg') }}"
+  class="simulation-plot"
+/>
+<img
+  src="{{ url_for('get_assets', asset_name = 'simulation_degree.jpeg') }}"
+  class="simulation-plot"
+/>
+{{output}} {% endblock %}

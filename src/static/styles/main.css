@@ -1,12 +1,31 @@
-body{
-    margin: 0;
-    font-family: sans-serif;
+body {
+  margin: 0;
+  font-family: sans-serif;
 }
-.simulation-plot{
-    width: 45%;
-    height: auto;
+
+.simulation-plot {
+  width: 100%;
 }
-.simulation-video{
-    width: 45%;
-    height: auto;
+
+.simulation-video {
+  width: 100%;
+}
+
+h2::before {
+  height: 70px;
+  content: "";
+  display: block;
+}
+
+.row {
+  gap: 2%;
+}
+
+.output-titles {
+  margin-top: 10%;
+}
+
+.output-videos,
+.output-graphs {
+  margin-top: 2%;
 }

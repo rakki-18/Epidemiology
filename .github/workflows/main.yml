@@ -16,12 +16,13 @@ jobs:
           python-version: "3.x"
       - name: Install depedencies
         run: |
-          cd model &&
+          cd src/model &&
           pip install -r requirements.txt
       - name: Build
         run: |
-          cd model && 
+          cd src/model && 
           pip install -e .
       - name: Running pytest
         run: |
-          cd model && pytest
+          cd src/model && 
+          pytest
