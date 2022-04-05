@@ -154,19 +154,20 @@
 </div>
 
 <div class="container">
+  <h2 id="Output-target">Simulation Outputs</h2>
   <div class="row output-titles">
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <h3>Random Simulation</h3>
     </div>
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <h3>Degree Based Simulation</h3>
     </div>
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <h3>Occupation Based Simulation</h3>
     </div>
   </div>
   <div class="row output-videos">
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <video width="320" height="240" controls class="simulation-video">
         <source
           src="{{ url_for('get_assets', asset_name = 'simulation_random.webm') }}"
@@ -175,7 +176,7 @@
         Your browser does not support the video tag.
       </video>
     </div>
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <video width="320" height="240" controls class="simulation-video">
         <source
           src="{{ url_for('get_assets', asset_name = 'simulation_degree.webm') }}"
@@ -184,25 +185,34 @@
         Your browser does not support the video tag.
       </video>
     </div>
-    <div class="col d-flex justify-content-center border">
-      Variable width content
+    <div class="col d-flex justify-content-center">
+      <video width="320" height="240" controls class="simulation-video">
+        <source
+          src="{{ url_for('get_assets', asset_name = 'simulation_occupation.webm') }}"
+          type="video/webm"
+        />
+        Your browser does not support the video tag.
+      </video>
     </div>
   </div>
   <div class="row output-graphs">
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <img
         src="{{ url_for('get_assets', asset_name = 'simulation_random.jpeg') }}"
         class="simulation-plot"
       />
     </div>
-    <div class="col d-flex justify-content-center border">
+    <div class="col d-flex justify-content-center">
       <img
         src="{{ url_for('get_assets', asset_name = 'simulation_degree.jpeg') }}"
         class="simulation-plot"
       />
     </div>
-    <div class="col d-flex justify-content-center border">
-      Variable width content
+    <div class="col d-flex justify-content-center">
+      <img
+        src="{{ url_for('get_assets', asset_name = 'simulation_occupation.jpeg') }}"
+        class="simulation-plot"
+      />
     </div>
   </div>
 </div>
