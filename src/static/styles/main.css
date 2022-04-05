@@ -17,14 +17,16 @@ h2::before {
   display: block;
 }
 
-/* .container > div {
+.container > div {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 3%;
 }
 
 .para-img {
-  display: inline-block;
-} */
+  flex-shrink: 0;
+}
 
 .row {
   gap: 2%;
