@@ -33,7 +33,7 @@ def make_plot(data, id):
     plt.plot(time, no_rec, label='Recovered')
     plt.plot(time, no_dec, label='Deceased')
 
-    plt.legend()
+    plt.legend(fontsize=20)
     plt.tight_layout()
     plt.savefig('assets/' + id + '.jpeg')
     plt.close(fig)
