@@ -85,55 +85,69 @@
 
 <div class="container">
   <h2 id="Compartmentalized-target">SIR Model</h2>
-  <div>
+  <div class="row">
     <img
-      src="{{ url_for('get_assets', asset_name = '400placeholder.png') }}"
-      class="para-img"
+      src="{{ url_for('get_assets', asset_name = 'SIR_img.png') }}"
+      class="para-img SIR_img"
     />
-    <p class="lead">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.
-    </p>
+    <div class="text-content col">
+      <p class="lead">
+        In general, an SIR model is a compartmental model wherein individuals
+        within a closed population are separated into 3 mutually exclusive
+        groups or <em>compartments</em> , namely <strong>Susceptible</strong>,
+        <strong>Infected</strong> and <strong>Recovered</strong> , based on
+        their disease status. In this model, the assumed progression is for a
+        susceptible individual to become infected, and an infected person to
+        become recovered after a period of time.
+      </p>
+      <p class="lead">
+        The SIR model is defined by only 2 parameters: the
+        <strong>effective contact rate (&beta;)</strong>, which affects the
+        transition from the susceptible compartment to the infected compartment,
+        and the <strong>rate of recovery (&gamma;)</strong>, which affects the
+        transition from the infected compartment to the recovered compartment.
+      </p>
+    </div>
   </div>
+  <p class="lead">
+    In the SIR model that we have implemented, we have assumed there to be 4
+    compartments: Susceptible, Infected, Recovered as well as Deceased. In the
+    simulation, we are predicting the progression of an epidemic in a community
+    including Apartments, offices, schools, and homes over a period of one
+    month. The dataset for the same has been generated using a script.
+  </p>
+  <p class="lead">
+    We have also considered a group of people to be vaccinated on day 5 based on
+    3 different vaccination strategies: <strong> Random </strong>Vaccination
+    Strategy,<strong> Degree Based</strong> Vaccination Strategy and
+    <strong> Occupation Based</strong> Strategy.
+  </p>
 </div>
 <div class="container">
   <h2 id="Contact-target">Contact Networks</h2>
-  <div>
-    <p class="lead">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.
-    </p>
+  <div class="row">
+    <div class="text-content col">
+      <p class="lead">
+        In the contact network model, people in the community are represented by
+        the nodes of the contact graph and their contacts are represented by the
+        edges. Each compartment is assigned a color and as people move from one
+        compartment to the other, the color of the nodes change accordingly.
+      </p>
+      <p class="lead">
+        Generally, the SIR model randomly pairs each person with another and
+        assumes that they have interacted in the timespan but this is not a
+        realistic assumption as it assumes that interaction between any two
+        people in the model is equiprobable which is not true. For example,
+        interaction among family members or co-workers is much more frequent
+        than two complete strangers. A contact network tracks the interaction of
+        people in the model over time which is analogous to a real world
+        society. Simulations using contact networks are therefore much more
+        reliable and accurately mimic real world epidemics.
+      </p>
+    </div>
     <img
-      src="{{ url_for('get_assets', asset_name = '400placeholder.png') }}"
-      class="para-img"
+      src="{{ url_for('get_assets', asset_name = 'contactNetwork_img.jpg') }}"
+      class="para-img CN_img"
     />
   </div>
 </div>
@@ -224,6 +238,14 @@
       <img
         src="{{ url_for('get_assets', asset_name = 'simulation_occupation.jpeg') }}"
         class="simulation-plot"
+      />
+    </div>
+  </div>
+  <div class="row output-comparison">
+    <div class="col d-flex justify-content-center">
+      <img
+        src="{{ url_for('get_assets', asset_name = 'comparison_graph.jpeg') }}"
+        class="simulation-comparison"
       />
     </div>
   </div>

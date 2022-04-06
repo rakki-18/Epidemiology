@@ -11,6 +11,10 @@ body {
   width: 100%;
 }
 
+.simulation-comparison {
+  width: 80%;
+}
+
 h2::before {
   height: 70px;
   content: "";
@@ -24,12 +28,25 @@ h2::before {
   gap: 3%;
 }
 
+.row {
+  gap: 2%;
+}
+
 .para-img {
   flex-shrink: 0;
 }
 
-.row {
-  gap: 2%;
+.SIR_img {
+  /* width: 400px; */
+  width: 30%;
+}
+
+.CN_img {
+  width: 25%;
+}
+
+.lead > strong {
+  font-weight: bold;
 }
 
 .simulation-button-container,
@@ -38,6 +55,32 @@ h2::before {
 }
 
 .output-videos,
-.output-graphs {
+.output-graphs,
+.output-comparison {
   margin-top: 2%;
+}
+
+/* @media (max-width: 1199.98px) {
+  .CN_img {
+    align-self: flex-start;
+  }
+} */
+
+@media (max-width: 991.98px) {
+  .SIR_img {
+    width: 100%;
+  }
+
+  .CN_img {
+    width: 78%;
+    order: 1;
+  }
+
+  .text-content {
+    order: 2;
+  }
+}
+
+@media (max-width: 119.98px) {
+  /* output stuff */
 }
