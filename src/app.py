@@ -4,15 +4,17 @@ from flask import Flask, render_template, url_for, request, redirect, send_from_
 import matplotlib.pyplot as plt
 
 from model.src.utils import SIR, run
-from model.src.vaccination_strategy.random_strategy import random_vaccination_strategy
-from model.src.vaccination_strategy.degree_based_strategy import degree_based_vaccination_strategy
+from model.src.vaccination_strategy.random_strategy import vaccination_strategy as random_vaccination_strategy
+from model.src.vaccination_strategy.degree_based_strategy import vaccination_strategy as degree_based_vaccination_strategy
+from model.src.vaccination_strategy.occupation_based_strategy import vaccination_strategy as occupation_based_vaccination_strategy
+
 app = Flask(__name__)
 
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.method == "POST":
-        return redirect(url_for('prediction'))
+    # if request.method == "POST":
+    #     return redirect(url_for('prediction'))
     return render_template('index.html')
 
 def make_plot(data, id):
@@ -61,12 +63,19 @@ def prediction():
 
     # Degree based Vaccination Strategy
     id = "simulation_degree"
-    vaccinated = degree_based_vaccination_strategy(model, 20, 5)
+    vaccinated = degree_based_vaccination_strategy(model)
     output = run(model, vaccinated, 5, id + '.webm')
     full_output[id] = output
     make_plot(full_output[id], id)
     
-    return render_template('predict.html', output=full_output)
+    # Occupation based Vaccination Strategy
+    id = "simulation_occupation"
+    vaccinated = occupation_based_vaccination_strategy(model)
+    output = run(model, vaccinated, 5, id + '.webm')
+    full_output[id] = output
+    make_plot(full_output[id], id)
+    
+    return render_template('index.html', output=full_output)
 
 
 if __name__ == '__main__':
