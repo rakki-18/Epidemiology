@@ -65,122 +65,166 @@
 <div class="container">
   <h2 id="Home-target">Project Description</h2>
   <p class="lead">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    With a clear example in front of us today, we know how a disease can make
+    it's way through a population and cause havoc in the community. However,
+    knowing a few characteristics of the disease such as - it's <strong> mode of
+    transmission</strong>,<strong> mortality rate</strong>, <strong>Rate of spread</strong> etc, the disease outbreak can
+    be modelled and studied and an efficient solution (vaccination routine) can
+    be figured out for it. In this project, we have modelled a disease outbreak
+    and used that model to generate a vaccination strategy i.e. a strategy
+    concerning the minimum number of people in the<strong> population to be vaccinated</strong>
+    so that the entire population is fairly protected from the disease.
   </p>
 </div>
 
 <div class="container">
   <h2 id="Compartmentalized-target">SIR Model</h2>
-  <div>
+  <div class="row">
     <img
-      src="{{ url_for('get_assets', asset_name = '400placeholder.png') }}"
-      class="para-img"
+      src="{{ url_for('get_assets', asset_name = 'SIR_img.png') }}"
+      class="para-img SIR_img"
     />
-    <p class="lead">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.
-    </p>
+    <div class="text-content col">
+      <p class="lead">
+        In general, an SIR model is a compartmental model wherein individuals
+        within a closed population are separated into 3 mutually exclusive
+        groups or <em>compartments</em> , namely <strong>Susceptible</strong>,
+        <strong>Infected</strong> and <strong>Recovered</strong> , based on
+        their disease status. In this model, the assumed progression is for a
+        susceptible individual to become infected, and an infected person to
+        become recovered after a period of time.
+      </p>
+      <p class="lead">
+        The SIR model is defined by only 2 parameters: the
+        <strong>effective contact rate (&beta;)</strong>, which affects the
+        transition from the susceptible compartment to the infected compartment,
+        and the <strong>rate of recovery (&gamma;)</strong>, which affects the
+        transition from the infected compartment to the recovered compartment.
+      </p>
+    </div>
   </div>
+  <p class="lead">
+    In the SIR model that we have implemented, we have assumed there to be 4
+    compartments: Susceptible, Infected, Recovered as well as Deceased. In the
+    simulation, we are predicting the progression of an epidemic in a community
+    including Apartments, offices, schools, and homes over a period of one
+    month. The dataset for the same has been generated using a script.
+  </p>
+  <p class="lead">
+    We have also considered a group of people to be vaccinated on day 5 based on
+    3 different vaccination strategies: <strong> Random </strong>Vaccination
+    Strategy,<strong> Degree Based</strong> Vaccination Strategy and
+    <strong> Occupation Based</strong> Strategy.
+  </p>
 </div>
 <div class="container">
   <h2 id="Contact-target">Contact Networks</h2>
-  <div>
-    <p class="lead">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.
-    </p>
-    <img
-      src="{{ url_for('get_assets', asset_name = '400placeholder.png') }}"
-      class="para-img"
-    />
+  <div class="row">
+    <div class="col">
+      <img
+        src="{{ url_for('get_assets', asset_name = 'contactNetwork_img.jpg') }}"
+        class="para-img CN_img float-end"
+      />
+      <div class="text-content">
+        <p class="lead">
+          In the contact network model, people in the community are represented
+          by the <strong>nodes</strong> of the contact graph and their contacts
+          are represented by the<strong> edges</strong>. Each compartment is
+          assigned a color and as people move from one compartment to the other,
+          the color of the nodes change accordingly.
+        </p>
+        <p class="lead">
+          Generally, the SIR model randomly pairs each person with another and
+          assumes that they have interacted in the timespan but this is not a
+          realistic assumption as it assumes that interaction between any two
+          people in the model is equiprobable which is
+          <strong> not true</strong>. For example, interaction among family
+          members or co-workers is much more frequent than two complete
+          strangers. A contact network tracks the interaction of people in the
+          model over time which is
+          <strong>analogous to a real world society </strong>. Simulations using
+          contact networks are therefore much more reliable and accurately mimic
+          real world epidemics.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 <div class="container">
   <h2 id="Vaccination-target">Vaccination Strategies</h2>
-  <div>
-    <img
-      src="{{ url_for('get_assets', asset_name = '400placeholder.png') }}"
-      class="para-img"
-    />
-    <p class="lead">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-      molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-      aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-      omnis molestiae, earum voluptas molestias minima quod dolorem suscipit
-      unde aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-      quam.
-    </p>
+  <div class="row">
+    <div class="col">
+      <!-- <div class="float-start"> -->
+      <img
+        src="{{ url_for('get_assets', asset_name = 'vaccinationStrategy_img.jpg') }}"
+        class="para-img VS_img float-start"
+      />
+      <!-- </div> -->
+      <div class="text-content">
+        <h4>Random Strategy</h4>
+        <p class="lead">
+          In this vaccination strategy, we vaccinate a given percentage of the
+          total population<strong> randomly </strong>after a few days of the disease outbreak
+          offset. By random we mean that we do not choose the people to
+          vaccinate based on any condition, but choose them randomly from the
+          population. Once we vaccinate a few people the Graph showing the
+          number of susceptible, infected and recovered can be seen to take a
+          drastic change, with more number of people being recovered over the
+          coming days.
+        </p>
+        <h4>Degree Based Strategy</h4>
+        <p class="lead">
+          In this strategy, we take help from the contact network graph in
+          identifying the nodes(people) with the <strong>highest number of contacts</strong>
+          which is indicated by the highest number of distinct edges arising
+          from a node, i.e. the nodes with the <strong>maximum degree</strong>. To implement this
+          strategy, first the degrees of all the nodes are recorded for the
+          first few days. Based on this collected data, the list of these nodes
+          is then sorted in decreasing order of their degrees. Then the <strong>first k
+          nodes</strong> from this sorted list are selected for vaccination where k is
+          the given percentage of people out of the total population. This
+          strategy evidently works better than the first one as here we are
+          selectively choosing a better group of people, vaccinating whom can
+          have a <strong>larger impact on the overall outbreak</strong>. Hence the graphs can be
+          seen to show better recovery and lesser death than the first strategy.
+        </p>
+        <h4>Metadata based strategy</h4>
+        <p class="lead">
+          In datasets, data indicates the entities and their prime features on
+          which the models will be trained. Metadata is additional data
+          describing each entity. In a special dataset we considered, metadata
+          included the <strong>daily routines of the people</strong>. Some routines make it
+          inevitable for people to have <strong>frequent contac</strong>t with other people. For
+          instance, a person from a family who has to go to office everyday is
+          more likely to be in contact with a lot more people than the other
+          members of the family. This way we can get a fair idea of the people
+          we might have to vaccinate in order to have the best impact on the
+          community. In our strategy, as mentioned earlier, we have selected k
+          random people among the group of persons who have a very <strong>social
+          lifestyle</strong>. (Eg : daily jobs - office).
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="container">
   <h2 id="Output-target">Simulation Outputs</h2>
-  <div class="row output-titles">
-    <div class="col d-flex justify-content-center">
+  <div class="output-grid">
+    <!-- <div class="row output-titles"> -->
+    <div class="col d-flex justify-content-center output-title t1">
       <h3>Random Simulation</h3>
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-center output-title t2">
       <h3>Degree Based Simulation</h3>
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-center output-title t3">
       <h3>Occupation Based Simulation</h3>
+      <!-- </div> -->
     </div>
-  </div>
-  <div class="row output-videos">
-    <div class="col d-flex justify-content-center">
-      <video width="320" height="240" controls class="simulation-video">
+    <!-- <div class="row output-videos"> -->
+    <div class="col d-flex justify-content-center output-video v1">
+      <video width="320" controls class="simulation-video">
         <source
           src="{{ url_for('get_assets', asset_name = 'simulation_random.webm') }}"
           type="video/webm"
@@ -188,8 +232,8 @@
         Your browser does not support the video tag.
       </video>
     </div>
-    <div class="col d-flex justify-content-center">
-      <video width="320" height="240" controls class="simulation-video">
+    <div class="col d-flex justify-content-center output-video v2">
+      <video width="320" controls class="simulation-video">
         <source
           src="{{ url_for('get_assets', asset_name = 'simulation_degree.webm') }}"
           type="video/webm"
@@ -197,8 +241,8 @@
         Your browser does not support the video tag.
       </video>
     </div>
-    <div class="col d-flex justify-content-center">
-      <video width="320" height="240" controls class="simulation-video">
+    <div class="col d-flex justify-content-center output-video v3">
+      <video width="320" controls class="simulation-video">
         <source
           src="{{ url_for('get_assets', asset_name = 'simulation_occupation.webm') }}"
           type="video/webm"
@@ -206,47 +250,85 @@
         Your browser does not support the video tag.
       </video>
     </div>
-  </div>
-  <div class="row output-graphs">
-    <div class="col d-flex justify-content-center">
+    <!-- </div> -->
+    <!-- <div class="row output-graphs"> -->
+    <div class="col d-flex justify-content-center output-graph g1">
       <img
         src="{{ url_for('get_assets', asset_name = 'simulation_random.jpeg') }}"
         class="simulation-plot"
       />
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-center output-graph g2">
       <img
         src="{{ url_for('get_assets', asset_name = 'simulation_degree.jpeg') }}"
         class="simulation-plot"
       />
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-center output-graph g3">
       <img
         src="{{ url_for('get_assets', asset_name = 'simulation_occupation.jpeg') }}"
         class="simulation-plot"
       />
     </div>
+    <!-- </div> -->
+    <!-- <div class="row output-comparison"> -->
+    <div class="col d-flex justify-content-center output-comparison">
+      <img
+        src="{{ url_for('get_assets', asset_name = 'comparison_graph.jpeg') }}"
+        class="simulation-comparison"
+      />
+    </div>
+    <!-- </div> -->
   </div>
 </div>
 
-<div class="container">
+<div class="container future-container">
   <h2 id="Future-target">ML based vaccination</h2>
   <p class="lead">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae omnis
-    molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium
-    quam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quae
-    omnis molestiae, earum voluptas molestias minima quod dolorem suscipit unde
-    aliquid rerum maxime quis quaerat cupiditate, eaque amet laudantium quam.
+    As of now we have seen models which vaccinate people only based on available
+    data, like the number of nodes with maximum degree out of whatever nodes
+    have been introduced into the network till that given point of time, say
+    time t (<em> Eg: t = 5 days</em>). Coming up with such vaccination strategies might not
+    give us the best results as we don't know the rest of the contact network
+    after time t. But what if there was a way to predict the best vaccination
+    strategy (<em>or close to the best one</em>) by speculating the pattern of the entire
+    contact network and vaccinating the right nodes based on this speculation.
+    This brings us into the world of machine learning. In the future we are
+    planning on using GNNs (<strong> Graph Neural Network</strong>) to identify the pattern of a
+    given graph and vaccinate the best people possible. For this, we will have
+    to train our model using several contact network training models (<em>datasets</em>),
+    using either of the following two metrics:
+    <ul>
+      <li>
+        <p class="lead">
+          Number of deaths in the model can be predicted and hence the right people
+          can be vaccinated.
+        </p>
+      </li>
+      <li>
+        <p class="lead">
+          The people being vaccinated can be another metric we can use to train our
+          model but this implementation might be a lot harder than the first one.
+        </p>
+      </li>
+    </ul>
+  </p>
+
+  <h3>How does a GNN work?</h3>
+  <p class="lead">
+    A graph neural network is a recent advancement in the field of neural
+    networks and computer vision. <strong>Convolutional neural networks </strong>(CNN) are capable
+    of identifying and analysing features from a picture fed to the computer
+    (<em> this is why it's called computer vision</em>), whereas GNNs are used to
+    visualize graphs and make appropriate predictions. In each layer of a GNN, a
+    node in the graph is embedded with the features of its adjacent nodes, i.e.
+    apart from having it's own features, a node from the graph can be used to
+    obtain some features of it's adjacent nodes and hence <strong> predict a node given
+    it's adjacent nodes</strong>. The more number of layers there are in a GNN, the more
+    embedding takes place and hence predictions are more accurate. However, if
+    there are too many layers in the GNN, <strong>overfitting </strong>takes place, i.e. the GNN
+    gives a highly accurate prediction for specific cases but fails to give good
+    results for any general case.
   </p>
 </div>
 
